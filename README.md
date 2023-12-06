@@ -99,6 +99,12 @@ Quotient_graph_nodes: 6
 ### Implementation
 
 * [Riccardo Maso](https://github.com/RiccardoMaso)
+## References
+
+- [1] RegexpToAutomaton repository: https://github.com/regindex/RegexpToAutomaton 
+- [2] Nicola Cotummaxio, Graphs can be succinctly indexed for pattern matching in O(|E|2+|V|5/2) time: https://ieeexplore.ieee.org/document/9810716
+- [3] PerformanceMPC repository: https://github.com/algbio/PerformanceMPC/tree/main
+
 
 ### Funding
 This project has received funding from the European Research Council (ERC) under the European Union’s Horizon Europe research and innovation programme, project REGINDEX, grant agreement No 101039208
