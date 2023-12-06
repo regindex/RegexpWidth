@@ -3,9 +3,9 @@
 # Width of a Regexp
 This is a software to compute the width of a given Regexp, it works as follows:
 
-1. Compute the Glushkov automaton of the input Regexp <cite>[1]</cite>
-2. Compute the partial preoder of the Glushkov automaton <cite>[2]</cite>
-3. Compute the chain decomposition of partial preorder <cite>[3]</cite>
+1. Compute the Glushkov automaton of the input Regexp
+2. Compute the partial preoder of the Glushkov automaton <cite>[1]</cite>
+3. Compute the chain decomposition of partial preorder <cite>[2]</cite>
 
 
 # Usage
@@ -101,9 +101,8 @@ Quotient_graph_nodes: 6
 * [Riccardo Maso](https://github.com/RiccardoMaso)
 ## References
 
-- [1] RegexpToAutomaton repository: https://github.com/regindex/RegexpToAutomaton 
-- [2] Nicola Cotummaxio, Graphs can be succinctly indexed for pattern matching in O(|E|2+|V|5/2) time: https://ieeexplore.ieee.org/document/9810716
-- [3] PerformanceMPC repository: https://github.com/algbio/PerformanceMPC/tree/main
+- [1] Nicola Cotummaxio, Graphs can be succinctly indexed for pattern matching in O(|E|2+|V|5/2) time: https://ieeexplore.ieee.org/document/9810716
+- [2] PerformanceMPC repository: https://github.com/algbio/PerformanceMPC/tree/main
 
 
 ### Funding
