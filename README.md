@@ -68,14 +68,14 @@ It also prints some statistics about the Partial order, the Glushkov automaton a
 
 # Usage
 
-### Dowload and compile
-
+### Dowload
 ```
-git clone TODO
-cd TODO
+git clone https://github.com/regindex/RegexpWidth
+```
+### Compile
+```
 make
 ```
-
 ### Run on Example Data
 
 ```
