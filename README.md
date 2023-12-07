@@ -13,9 +13,9 @@ This is a software to compute the width of a given Regexp, it works as follows:
 ```
 Usage: ./regexpWidth
 ```
-The regexp it's taken from the standard input stream
+The regexp it's taken from the standard input stream and should be written all in a single line
 
-Supported operators for the regexp: ()+?|* 
+Supported operators for the regexp: ()+?|*
 
 There is a set of optional flags:
 ```

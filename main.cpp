@@ -67,8 +67,17 @@ int main(int argc, char** argv) {
     //input-chain-partial-gl-quotient
 
     std::string regexp = "";
-    std::cin >> regexp;
+    std::string tmp = "";
+    std::getline(std::cin, regexp);
 
+    // Remove spaces from the string using erase-remove idiom
+    regexp.erase(std::remove(regexp.begin(), regexp.end(), ' '), regexp.end());
+
+ /*    
+    while(std::cin >> tmp) {
+        regexp.append(tmp);
+        std::cout << tmp;
+    } */
     std::vector<int> symbols_amount(4,0);
     for(auto symbol : regexp) {
         if(symbol == '+') symbols_amount.at(SUM) += 1;
@@ -77,7 +86,7 @@ int main(int argc, char** argv) {
         if(symbol == '*') symbols_amount.at(STAR) += 1;
     }
     
-    NFA* glushkov_automaton = compute_glushkov_automaton(regexp, 128, 0);
+    NFA* glushkov_automaton = compute_glushkov_automaton(regexp, 128, 1);
     Graph_h g = glushkov_automaton->create_graph();    
     
     PartialOrder preorder(g);

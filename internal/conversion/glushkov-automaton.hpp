@@ -4,8 +4,6 @@
 #include "common.hpp"
 #include "nfa.hpp"
 
-bool vmode = false;
-
 void annotate_syntax_tree(stree_node* node, NFA* automaton, std::vector<char>& mapping);
 
 stree_node* compute_syntax_tree(std::string& regexp,std::vector<char>& mapping)
@@ -176,10 +174,18 @@ uint compute_postfix_format(std::string &regexp)
 }
 
 void process_concat_oper(stree_node* node, NFA* automaton, std::vector<char>& mapping)
-{
+{   
+    //std::cout << "**************\n";
     // recursive call
     annotate_syntax_tree(node->left, automaton, mapping);
     annotate_syntax_tree(node->right, automaton, mapping);
+
+    //std::cout << "type= " << (int)node->type << " left rmost= ";
+    //for(size_t i=0;i<node->left->rmost.size();++i)
+    //{
+    //    std::cout << node->left->rmost[i] << " ";
+    //}
+    //std::cout << "\n";
 
     for(size_t i=0;i<node->left->rmost.size();++i)
     {
@@ -266,12 +272,14 @@ void process_union_oper(stree_node* node, NFA* automaton, std::vector<char>& map
     node->lmost = node->left->lmost;
     node->lmost.insert( node->lmost.end(), node->right->lmost.begin(), node->right->lmost.end() );
     node->left->lmost.clear();
-    node->left->rmost.clear();
+    node->right->lmost.clear();
+    //node->left->rmost.clear();
 
     node->rmost = node->left->rmost;
     node->rmost.insert( node->rmost.end(), node->right->rmost.begin(), node->right->rmost.end() );
     node->right->rmost.clear();
-    node->right->lmost.clear();
+    node->left->rmost.clear();
+    //node->right->lmost.clear();
 
     node->min = node->left->min or node->right->min;
 
@@ -363,18 +371,17 @@ NFA* compute_glushkov_automaton(std::string regexp, size_t sigma, bool verb)
     vmode = verb;
     NFA* glushkov_automaton = new NFA(compute_postfix_format(regexp)+1,sigma); 
 
-    if(vmode) std::cout << "###### Postfix regexp: " << regexp << "\n";
+    //if(vmode) std::cout << "###### Postfix regexp: " << regexp << "\n";
 
     std::vector<char> mapping;
     stree_node *syntax_root = compute_syntax_tree(regexp,mapping);
 
     if(vmode){
+        std::cout << "###### Syntax tree of: " << regexp << "\n";
 
-    std::cout << "###### Syntax tree of: " << regexp << "\n";
+        printBT(syntax_root);
 
-    printBT(syntax_root);
-
-    std::cout << "###### Computing the Glushkov automaton for: " << regexp << "\n";
+        std::cout << "###### Computing the Glushkov automaton for: " << regexp << "\n";
     }
 
     annotate_syntax_tree(syntax_root, glushkov_automaton, mapping);

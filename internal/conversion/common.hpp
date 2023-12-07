@@ -1,6 +1,9 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#include "common.hpp"
+#include "../graph/graph.hpp"
+
 // LIBRARIES #########################
 #include <iostream>
 #include <string>
@@ -15,6 +18,16 @@
 // GLOBAL VARIABLES ###################
 const char sep = '_';
 const std::set<char> operators({'+', '*', '.', '|', '(', ')', '_', '?', '+'});
+bool vmode = false;
+typedef uint32_t uint;
+int sigma = 128;
+// ARGS STRUCT ###################
+struct Args
+{
+  std::string regexp;
+  bool NFA = false, DFA = false, DFAmin = false;
+  bool verbose = false; 
+};
 // SYNTAX TREE NODE####################
 struct stree_node
 {
