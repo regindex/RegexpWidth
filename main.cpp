@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
         if(symbol == '*') symbols_amount.at(STAR) += 1;
     }
     
-    NFA* glushkov_automaton = compute_glushkov_automaton(regexp, 128, 1);
+    NFA* glushkov_automaton = compute_glushkov_automaton(regexp, 128, 0);
     Graph_h g = glushkov_automaton->create_graph();    
     
     PartialOrder preorder(g);
