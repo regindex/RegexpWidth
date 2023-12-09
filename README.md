@@ -1,21 +1,26 @@
-# Progetto-AlgorithmOverMassiveData
- 
-# Width of a Regexp
+# RegexpWidth (Work In Progess)
 This is a software to compute the width of a given Regexp, it works as follows:
 
 1. Compute the Glushkov automaton of the input Regexp
 2. Compute the partial preoder of the Glushkov automaton <cite>[1]</cite>
 3. Compute the chain decomposition of partial preorder <cite>[2]</cite>
 
-
-# Usage
-
+NOTICE: This repository is a work in progress and contains some bugs that are currently being addressed.
 ```
 Usage: ./regexpWidth
 ```
 The regexp it's taken from the standard input stream and should be written all in a single line
 
 Supported operators for the regexp: ()+?|*
+The operators have the following syntax:
+- "+": it's a unary operator, specifies that the preceding character or group of characters 
+must appear one or more times.
+- "?": it's a unary operator, specifies that the preceding character or group of characters is 
+optional. It matches either zero or one occurrence of the preceding element.
+- "|": it's a binary operator, it functions as a logical OR, allowing you to match either the 
+pattern on the left side of the | or the pattern on the right side.
+- "*": it's a unary operator, it specifies that the preceding character or group of characters 
+can occur zero or more times. 
 
 There is a set of optional flags:
 ```

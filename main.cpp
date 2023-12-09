@@ -67,17 +67,10 @@ int main(int argc, char** argv) {
     //input-chain-partial-gl-quotient
 
     std::string regexp = "";
-    std::string tmp = "";
-    std::getline(std::cin, regexp);
+    char tmp = ' ';
+    while(std::cin >> tmp)
+        regexp.append(1, tmp);    
 
-    // Remove spaces from the string using erase-remove idiom
-    regexp.erase(std::remove(regexp.begin(), regexp.end(), ' '), regexp.end());
-
- /*    
-    while(std::cin >> tmp) {
-        regexp.append(tmp);
-        std::cout << tmp;
-    } */
     std::vector<int> symbols_amount(4,0);
     for(auto symbol : regexp) {
         if(symbol == '+') symbols_amount.at(SUM) += 1;

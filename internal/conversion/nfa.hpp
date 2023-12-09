@@ -110,7 +110,7 @@ public:
 	}
 	
 	Graph_h create_graph() {
-		Graph_h g(this->no_states+1);
+		Graph_h g(this->no_states);
 
 		size_t source = 0;
 		for(auto& map: this->transitions) {
