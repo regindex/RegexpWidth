@@ -2,48 +2,46 @@
 This is a software to compute the width of a given Regexp, it works as follows:
 
 1. Compute the Glushkov automaton of the input Regexp
-2. Compute the partial preoder of the Glushkov automaton <cite>[1]</cite>
-3. Compute the chain decomposition of partial preorder <cite>[2]</cite>
+2. Compute the colex partial preoder of the Glushkov automaton <cite>[1]</cite>
+3. Compute the chain decomposition of the colex partial preorder <cite>[2]</cite>
 
 NOTICE: This repository is a work in progress and contains some bugs that are currently being addressed.
-```
-Usage: ./regexpWidth
-```
-The regexp it's taken from the standard input stream and should be written all in a single line
 
-Supported operators for the regexp: ()+?|*
+The regexp is read from the standard input stream and should be written all in a single line
+
+Supported regexp operators: ()+?|*
 The operators have the following syntax:
-- "+": it's a unary operator, specifies that the preceding character or group of characters 
+- "+": is a unary operator, specifies that the preceding character or group of characters 
 must appear one or more times.
-- "?": it's a unary operator, specifies that the preceding character or group of characters is 
+- "?": is a unary operator, specifies that the preceding character or group of characters is 
 optional. It matches either zero or one occurrence of the preceding element.
-- "|": it's a binary operator, it functions as a logical OR, allowing you to match either the 
-pattern on the left side of the | or the pattern on the right side.
-- "*": it's a unary operator, it specifies that the preceding character or group of characters 
+- "|": is a binary operator. It functions as a logical OR, allowing you to match either the 
+pattern on the left-hand side of the | or the pattern on the right-hand side.
+- "*": is a unary operator. It specifies that the preceding character or group of characters 
 can occur zero or more times. 
 
-There is a set of optional flags:
+Optional flags:
 ```
--chain FILE         It stores the chain decomposition of the 
+-chain FILE         Store the chain decomposition of the 
                     partial preorder in the file specified in
                     the the following format:     
                         -in the first line we have the number of chains
                         -in the following lines we have the chains
 
--partial FILE       It will store the partial preorder as Hasse
+-partial FILE       Store the partial preorder as a Hasse
                     diagram in the following format:
-                        -in the first line we have the number nodes
+                        -in the first line we have the number of nodes
                          and number of edges
                         -in the following lines we have the edges
                         
--gl FILE            It will save the Glushkov automaton in 
+-gl FILE            Save the Glushkov automaton in 
                     the specified file as a dot format file.
 
--quotient FILE      It will store the quotient graph obtained 
+-quotient FILE      Store the quotient graph obtained 
                     by collapsing the equivalent class defined 
                     by the partial preorder as a dot format file
 
--verificator        It checks if the algorithm works correctly 
+-verificator        Check if the algorithm works correctly 
                     and if the given order is partial and 
                     co-lexicographic.
 ```
@@ -64,16 +62,15 @@ This tool prints some statistics about the regexp:
 * The number of times the symbol "|" appears in the regexp.
 * The number of times the symbol "*" appears in the regexp. 
 
-It also prints some statistics about the Partial order, the Glushkov automaton and the quotient graph:
+It also prints some statistics about the colex Partial order, the Glushkov automaton and the quotient graph:
 
 * The width of the partial order
-* The number of edges of the Glushkov automaton
-* The number of nodes of the Glushkov automaton
-* The number of nodes of the quotient graph
+* The number of nodes and edges of the Glushkov automaton
+* The number of nodes and edges of the quotient graph
 
 # Usage
 
-### Dowload
+### Download
 ```
 git clone https://github.com/regindex/RegexpWidth
 ```
@@ -84,29 +81,29 @@ make
 ### Run on Example Data
 
 ```
-./regexpWidth
-(a*(ab))+((b*)|a*)*
+echo "(a*(ab))+((b*)|a*)*" | ./regexpWidth
 ```
 
 Output:
 ```
 Regexp length: 19
-+ symbols quantity: 1
-? symbols quantity: 0
-| symbols quantity: 1
-* symbols quantity: 4
++ symbols occurrences: 1
+? symbols occurrences: 0
+| symbols occurrences: 1
+* symbols occurrences: 4
 --------------------------------
 Width: 3
-Glushkov_edges: 12
 Glushkov_nodes: 6
+Glushkov_edges: 13
 Quotient_graph_nodes: 6
+Quotient_graph_edges: 13
 ```
 ### Implementation
 
 * [Riccardo Maso](https://github.com/RiccardoMaso)
 ## References
 
-- [1] Nicola Cotummaxio, Graphs can be succinctly indexed for pattern matching in O(|E|2+|V|5/2) time: https://ieeexplore.ieee.org/document/9810716
+- [1] Nicola Cotumaccio, Graphs can be succinctly indexed for pattern matching in O(|E|2+|V|5/2) time: https://ieeexplore.ieee.org/document/9810716
 - [2] PerformanceMPC repository: https://github.com/algbio/PerformanceMPC/tree/main
 
 
