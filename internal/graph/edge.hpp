@@ -1,16 +1,21 @@
 #ifndef Edge_H
 #define Edge_H
 
-class Edge_h {
+#include <cstddef>
+
+
+template <typename T> class Edge_T {
     protected:
-        int v1;
-        int v2;
-        char label;
+        size_t v1;
+        size_t v2;
+        T label;
     public:
-        Edge_h(int v1, int v2,char label);
-        int getV1();
-        int getV2();
-        char getLabel();
+        Edge_T(int v1, int v2, T label);
+        size_t getV1();
+        size_t getV2();
+        T getLabel();
 };
+
+#include "edge.cpp"
 
 #endif

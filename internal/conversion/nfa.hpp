@@ -109,8 +109,8 @@ public:
 		}
 	}
 	
-	Graph_h create_graph() {
-		Graph_h g(this->no_states);
+	Graph_T<char> create_graph() {
+		Graph_T<char> g(this->no_states, ' ');
 
 		size_t source = 0;
 		for(auto& map: this->transitions) {

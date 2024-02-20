@@ -23,3 +23,4 @@ void maxflow_solve_edmonds_karp_DMOD(Flowgraph<Edge::Maxflow> &fg);
 std::unique_ptr<Flowgraph<Edge::Minflow>> naive_minflow_reduction(Graph &g, std::function<int(int)> node_weight=[](int i){return 1;});
 std::unique_ptr<Flowgraph<Edge::Minflow>> greedy_minflow_reduction(Graph &g, std::function<int(int)> node_weight=[](int i){return 1;});
 std::unique_ptr<Flowgraph<Edge::Minflow>> greedy_minflow_reduction_sparsified(Graph &g, std::function<int(int)> node_weight=[](int i){return 1;});
+

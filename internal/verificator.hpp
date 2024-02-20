@@ -12,33 +12,35 @@
 typedef std::vector<std::vector<bool> > Vbb;
 
 //check if the order over the quotient graph is a co-lex partial order
-std::pair<bool,bool> _verificator(Graph_h &quotient, Vbb &order) {
+template <typename T>
+std::pair<bool,bool> _verificator(Graph_T<T> &quotient, Vbb &order) {
     size_t n = quotient.getVertexesSize();
 
 
     bool co_lex = true;
-    std::vector<std::pair<char,char>> lambdas;
+    std::vector<T> lambdas;
     for(size_t i = 0; i < n; ++i) {
-        lambdas.push_back(quotient.getMinMaxLambda(i));
+        lambdas.push_back(quotient.getLambda(i));
     }
      
 
     for(size_t i = 0; i < n; ++i) {
         for(size_t j = 0; j < n; ++j) {
             //max < min
-            if( lambdas.at(i).second == '#' || lambdas.at(i).second < lambdas.at(j).first) {
+            //TODO controllo solo minore e non anche uguale
+            if( lambdas.at(i) == quotient.getNull()  || compare_not_eq(lambdas.at(i),lambdas.at(j)) ) {
                 if(order.at(i).at(j) == false)
                     co_lex = false;
             }
         }        
     }
-
+    //TODO checl null value
     for(size_t u = 0; u < n; ++u) {
         for(size_t v = 0; v < n; ++v) {
             for(size_t u1 = 0; u1 < n; ++u1) {
                 for(size_t v1 = 0; v1 < n; ++v1) {
                     //(u1,u),(v1,v) in E
-                    if(quotient.getEdge(u1,u) != ' ' && quotient.getEdge(v1, v) != ' ') {
+                    if(quotient.getEdge(u1,u) != quotient.getNull() && quotient.getEdge(v1, v) != quotient.getNull()) {
                         //same label and u < v
                         if(lambdas.at(u) == lambdas.at(v) && order.at(u).at(v) && u != v) {
                             //u1 < v1 ?
@@ -61,7 +63,6 @@ std::pair<bool,bool> _verificator(Graph_h &quotient, Vbb &order) {
                     if(!order.at(a).at(c))
                         partial = false;
                 }
-        
             }   
         }    
     }
@@ -85,20 +86,21 @@ std::pair<bool,bool> _verificator(Graph_h &quotient, Vbb &order) {
 
 
 //compute the quotient graph and the order from the preorder
-std::pair<Graph_h, Vbb> compute_quotient(Graph_h& graph, PartialOrder pre) {
+template <typename T>
+std::pair<Graph_T<T>, Vbb> compute_quotient(Graph_T<T>& G, Order pre) {
     std::unordered_map<int, std::unordered_set<int>> convex_sets;
     Vbb preorder = pre.getIncidenceMatrix();
 
     std::unordered_set<int> v_set;
-    for (size_t i = 0; i < graph.getVertexesSize(); i++) {
+    for (size_t i = 0; i < G.getVertexesSize(); i++) {
         v_set.insert(i);
     }
     
     int count = 0;
-    for (size_t i = 0; i < graph.getVertexesSize(); ++i) {
+    for (size_t i = 0; i < G.getVertexesSize(); ++i) {
         if(v_set.count(i) > 0) {
             std::unordered_set<int> my_set;
-            for (size_t j = 0; j < graph.getVertexesSize(); ++j) {    
+            for (size_t j = 0; j < G.getVertexesSize(); ++j) {    
                 if(preorder[i][j] == 1 && preorder[j][i] == 1) {
                     my_set.insert(i);
                     my_set.insert(j);
@@ -111,7 +113,7 @@ std::pair<Graph_h, Vbb> compute_quotient(Graph_h& graph, PartialOrder pre) {
         }
     }
     
-    Graph_h quotient(convex_sets.size());
+    Graph_T<T> quotient(convex_sets.size(), G.getNull());
     Vbb new_order(convex_sets.size(), std::vector<bool>(convex_sets.size(),0));
 
     for (auto p1 : convex_sets) {
@@ -126,8 +128,8 @@ std::pair<Graph_h, Vbb> compute_quotient(Graph_h& graph, PartialOrder pre) {
 
             for(auto old_node1 : node_set1) {
                 for(auto old_node2 : node_set2) {
-                    auto e = graph.getEdge(old_node1, old_node2);
-                    if(e != ' ') {
+                    auto e = G.getEdge(old_node1, old_node2);
+                    if(e != G.getNull()) {
                         quotient.addEdge(new_node1, new_node2, e);
                     }
                     if(preorder[old_node1][old_node2]) {
@@ -147,9 +149,6 @@ std::pair<Graph_h, Vbb> compute_quotient(Graph_h& graph, PartialOrder pre) {
         }
     }
 
-
-
-
     return std::make_pair(quotient, new_order);
 }
 
@@ -159,9 +158,9 @@ std::pair<Graph_h, Vbb> compute_quotient(Graph_h& graph, PartialOrder pre) {
  *  After that it check if the order of the quotient graph
  *  is a co-lex partial order
  */
-std::pair<bool,bool> check_orders(Graph_h& graph, PartialOrder& pre) {
-    auto objects = compute_quotient(graph, pre);
-    auto results = _verificator(objects.first, objects.second);
+template <typename T>
+std::pair<bool,bool> check_orders(std::pair<Graph_T<T>, Vbb> graph_order) {
+    auto results = _verificator(graph_order.first, graph_order.second);
 
     return results;
 }

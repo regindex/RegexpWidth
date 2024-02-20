@@ -4,7 +4,8 @@
 #include <fstream>
 
 
-PartialOrder::PartialOrder(Graph_h& G) {
+template <typename T>
+Order::Order(Graph_T<T>& G) {
 
     this->n = G.getVertexesSize();
 
@@ -14,9 +15,9 @@ PartialOrder::PartialOrder(Graph_h& G) {
 
         (u1,v1) -> (u2,v2)
     */
-    std::vector<std::pair<char,char>> lambdas;
+    std::vector<T> lambdas;
     for(size_t i = 0; i < n; ++i) {
-        lambdas.push_back(G.getMinMaxLambda(i));
+        lambdas.push_back(G.getLambda(i));
     }
      
     this->incidenceMatrix.resize(n, std::vector<bool>(n,1));
@@ -31,7 +32,7 @@ PartialOrder::PartialOrder(Graph_h& G) {
             //reflexive due to total order of the alphabet
             //if the pair is marked we skip it 
             if(incidenceMatrix.at(u).at(v) == 1) {
-                if( !(lambdas.at(u).first <= lambdas.at(v).second) ) {
+                if( !compare(lambdas.at(u), lambdas.at(v) )) {
                     incidenceMatrix.at(u).at(v) = 0;
 
                     //propagate
@@ -46,7 +47,7 @@ PartialOrder::PartialOrder(Graph_h& G) {
                         for (size_t u2 = 0; u2 < this->n; ++u2) {
                             for (size_t v2 = 0; v2 < this->n; ++v2) {
                                 //if the pair u2 v2 can be reached from the same 
-                                if( G.at(u1,u2) != ' ' && G.at(u1,u2) == G.at(v1,v2) && incidenceMatrix.at(u2).at(v2) == 1) {
+                                if( G.getEdge(u1,u2) != G.getNull() && G.getEdge(u1,u2) == G.getEdge(v1,v2) && incidenceMatrix.at(u2).at(v2) == 1) {
                                     /* std::cout << "marked pairs" << std::endl;
                                     std::cout << u1 << " " << u2 << std::endl;
                                     std::cout << v1 << " " << v2 << std::endl; */
@@ -69,7 +70,7 @@ PartialOrder::PartialOrder(Graph_h& G) {
     
 }
 
-void PartialOrder::printIncidenceMatrix() {
+void Order::printIncidenceMatrix() {
     std::cout << "  ";
     for (size_t i = 0; i < this->n; i++)
     {
@@ -84,11 +85,11 @@ void PartialOrder::printIncidenceMatrix() {
         std::cout << std::endl;    
     }}
 
-Vbb PartialOrder::getIncidenceMatrix() {
+Vbb Order::getIncidenceMatrix() {
     return this->incidenceMatrix;
 }
 
-void PartialOrder::printOrder(std::string output_file_name) {
+void Order::printOrder(std::string output_file_name) {
     size_t m = 0;
     //iterate through the matrix
     for (size_t i = 0; i < this->n; ++i) {
@@ -114,7 +115,7 @@ void PartialOrder::printOrder(std::string output_file_name) {
 }
 
 
-Vbb PartialOrder::getTransitiveReduction() {
+Vbb Order::getTransitiveReduction() {
     Vbb trans(this->incidenceMatrix);
 
     for(int k = 0; k<this->n; ++k)
@@ -124,7 +125,17 @@ Vbb PartialOrder::getTransitiveReduction() {
     return trans;
 }
 
-void PartialOrder::printTransitiveReduction(std::string output_file_name) {
+void Order::setTransitiveReduction() {
+    Vbb trans(this->incidenceMatrix);
+
+    for(int k = 0; k<this->n; ++k)
+        for(int i = 0; i<this->n; ++i)
+            for(int j = 0; j<this->n; ++j)
+                if( trans.at(k).at(i) && trans.at(i).at(j) && i != k && i != j) trans.at(k).at(j) = 0;
+    this->incidenceMatrix = trans;
+}
+
+void Order::printTransitiveReduction(std::string output_file_name) {
     //transitive reduction of incidence matrix
     Vbb trans(getTransitiveReduction());
     

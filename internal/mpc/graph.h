@@ -146,3 +146,4 @@ std::unique_ptr<Graph> random_dag(int n, int m, int seed);
 std::unique_ptr<Graph> random_x_partite(int x, int n, int m, int seed);
 std::unique_ptr<Graph> random_x_chain(int k, int n, int m, int seed);
 std::unique_ptr<Graph> binary_tree(int depth, bool reverse);
+

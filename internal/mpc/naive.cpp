@@ -224,8 +224,12 @@ path_cover minflow_reduction_path_recover_faster(Flowgraph<Edge::Minflow> &fg) {
 	}
 
 	for(int i=1; i<=fg.n; i++) {
-		for(auto &[u, e]:fg.edge_out[i])
+		for(auto &[u, e]:fg.edge_out[i]) { {
 			assert(e->flow == 0);
+			if(e->flow != 0)
+				std::cout << e->flow << std::endl;
+		}
+		}
 	}
 	return cover;
 }

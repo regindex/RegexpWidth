@@ -64,7 +64,7 @@ int solve_mpc(std::vector<std::vector<bool>> adj, std::string output_path) {
         out << cover.size() << "\n";
         for(auto &path:cover) {
             for(auto &u:path) {
-                out << u << " ";
+                out << u-1 << " ";
             }
             out << "\n";
         }
