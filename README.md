@@ -4,7 +4,7 @@ This is a software to compute the width of a given regular expression or NFA.
 NOTICE: This repository is a work in progress and could contains some bugs that are currently being addressed.
 
 ## Regular expression
-To take a regular expression as input it's needed to specify the flag -DFA.
+To take a regular expression as input it's needed to specify the flag -REG.
 
 The tool work as follow:
 1. Compute the Glushkov automaton of the input Regexp
