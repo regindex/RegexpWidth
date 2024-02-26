@@ -88,6 +88,7 @@ digraph example {
 ```
 
 The format is a digraph, the nodes should be numbered from 0 to n. The label are strings inside two brackets and there must be a space at the beginning and one at the end of the label, as in the example.
+All incoming arcs to an NFA node must have the same label.
 
 Optional flags:
 ```
