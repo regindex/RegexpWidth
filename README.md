@@ -5,7 +5,7 @@ NOTICE: This repository is a work in progress and could contains some bugs that 
 
 ## Regular expression
 
-The tool works as follow:
+In the regular expression case the tool works as follow:
 1. Compute the Glushkov automaton of the input Regexp
 2. Compute the colex partial preoder of the Glushkov automaton <cite>[1]</cite>
 3. Compute the chain decomposition of the colex partial preorder <cite>[2]</cite>
@@ -41,7 +41,7 @@ It also prints some statistics about the colex Partial order, the Glushkov autom
 
 ## NFA
 
-The tool works as follow:
+In the NFA case the tool works as follow:
 1. Compute the colex partial preoder of the automaton <cite>[1]</cite>
 2. Compute the chain decomposition of the colex partial order <cite>[2]</cite>
 
@@ -60,6 +60,7 @@ digraph example {
 ```
 
 The format is a digraph, the nodes should be numbered from 0 to n. The label are strings inside two brackets and there must be a space at the beginning and one at the end of the label, as in the example.
+All incoming arcs to an NFA node must have the same label.
 
 ### Output 
 
