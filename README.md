@@ -4,12 +4,11 @@ This is a software to compute the width of a given regular expression or NFA.
 NOTICE: This repository is a work in progress and could contains some bugs that are currently being addressed.
 
 ## Regular expression
-To take a regular expression as input it's needed to specify the flag -DFA.
 
-The tool work as follow:
+The tool works as follow:
 1. Compute the Glushkov automaton of the input Regexp
 2. Compute the colex partial preoder of the Glushkov automaton <cite>[1]</cite>
-3. Compute the chain decomposition of the colex partial order <cite>[2]</cite>
+3. Compute the chain decomposition of the colex partial preorder <cite>[2]</cite>
 
 The regexp is read from the standard input stream and should be written all in a single line
 
@@ -23,32 +22,6 @@ optional. It matches either zero or one occurrence of the preceding element.
 pattern on the left-hand side of the | or the pattern on the right-hand side.
 - "*": is a unary operator. It specifies that the preceding character or group of characters 
 can occur zero or more times. 
-
-Optional flags:
-```
--chain FILE         Store the chain decomposition of the 
-                    partial preorder in the file specified in
-                    the the following format:     
-                        -in the first line we have the number of chains
-                        -in the following lines we have the chains
-
--partial FILE       Store the partial preorder as a Hasse
-                    diagram in the following format:
-                        -in the first line we have the number of nodes
-                         and number of edges
-                        -in the following lines we have the edges
-                        
--gl FILE            Save the Glushkov automaton in 
-                    the specified file as a dot format file.
-
--quotient FILE      Store the quotient graph obtained 
-                    by collapsing the equivalent class defined 
-                    by the partial preorder as a dot format file
-
--verificator        Check if the algorithm works correctly 
-                    and if the given order is partial and 
-                    co-lexicographic.
-```
 
 ### Output 
 
@@ -67,9 +40,8 @@ It also prints some statistics about the colex Partial order, the Glushkov autom
 * The number of nodes and edges of the quotient graph
 
 ## NFA
-To take a regular expression as input it's needed to specify the flag -NFA.
 
-The tool work as follow:
+The tool works as follow:
 1. Compute the colex partial preoder of the automaton <cite>[1]</cite>
 2. Compute the chain decomposition of the colex partial order <cite>[2]</cite>
 
@@ -88,29 +60,6 @@ digraph example {
 ```
 
 The format is a digraph, the nodes should be numbered from 0 to n. The label are strings inside two brackets and there must be a space at the beginning and one at the end of the label, as in the example.
-
-Optional flags:
-```
--chain FILE         Store the chain decomposition of the 
-                    partial preorder in the file specified in
-                    the the following format:     
-                        -in the first line we have the number of chains
-                        -in the following lines we have the chains
-
--partial FILE       Store the partial preorder as a Hasse
-                    diagram in the following format:
-                        -in the first line we have the number of nodes
-                         and number of edges
-                        -in the following lines we have the edges
-
--quotient FILE      Store the quotient graph obtained 
-                    by collapsing the equivalent class defined 
-                    by the partial preorder as a dot format file
-
--verificator        Check if the algorithm works correctly 
-                    and if the given order is partial and 
-                    co-lexicographic.
-```
 
 ### Output 
 
@@ -135,6 +84,48 @@ git clone https://github.com/regindex/RegexpWidth
 ```
 make
 ```
+
+### usage
+
+```
+usage: ./regexpWidth [-REG|-DFA] [OPTIONS]
+
+DESCRIPTION
+    Tool to compute the width of the order of a regular expression or NFA
+
+input type arguments:
+    -REG   the input is a regular expression taken from the input stream
+    -NFA   the input is a NFA taken from the input stream (the format is described above)
+
+OPTIONS
+    Partial output print
+        -chain FILE         Store the chain decomposition of the 
+                            partial order in the file specified in
+                            the the following format:     
+                                -in the first line we have the number of chains
+                                -in the following lines we have the chains
+
+        -partial FILE       Store the partial order as a Hasse
+                            diagram in the following format:
+                                -in the first line we have the number of nodes
+                                and number of edges
+                                -in the following lines we have the edges
+
+        -quotient FILE      Store the quotient graph obtained 
+                            by collapsing the equivalent class defined 
+                            by the partial preorder as a dot format file
+
+        -gl FILE            Save the Glushkov automaton in 
+                            the specified file as a dot format file.
+                            This flag can be used only if the input is a 
+                            Regular Expression (-REG flag)
+
+    Optional control flag
+        -verificator        Check if the algorithm works correctly 
+                            and if the computed order is partial and 
+                            co-lexicographic.
+```
+
 ## Run on Example Data
 
 ### Regular expression

@@ -6,6 +6,7 @@
 #include <cassert>
 #include <iostream>
 
+
 struct Flags {
 
     public:
@@ -16,8 +17,9 @@ struct Flags {
         std::string quotient_file = "";
         bool verificator = false;
 
-        Flags(int argc, char** argv){
+        Flags(int argc, char** argv){           
             bool problem = false;
+
             for(size_t i = 1; i < argc; ++i) {
                 if(strcmp(argv[i],"-NFA") == 0) {
                     if(this->type == "")
